@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+  <div id="index-banner" style="height: 450px; margin-top: 50px;">
+      
+        <div class="row center">
+          <div class="collection col l2 s4">
+            <a href="{% url 'account' %}?setting=preferences" class="left collection-item">Preferences</a>
+            <a href="{% url 'account' %}?setting=payment" class="left collection-item">Payment Methods</a>
+            <a href="{% url 'account' %}?setting=history" class="left collection-item">History</a>
+          </div>
+
+        {% if setting %}
+          {% ifequal setting "preferences" %}
+            <div class="col l9 s8">
+                <table class="stripped">
+                  <thead>
+                    <tr>
+                      <th><h5 class="header col s12 light">Preferences</h5></th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Email Login</td>
+                      <td>someone@gmail.com</td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+          {% endifequal %}
+          {% ifequal setting "payment" %}
+            <div class="col l9 s8">
+                <table class="stripped">
+                  <thead>
+                    <tr>
+                      <th><h5 class="header col s12 light">Payment</h5></th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Credit</td>
+                      <td>xxxx-xxxx-xxxx-1234</td>
+                    </tr>
+                    <tr>
+                      <td>Debit</td>
+                      <td>xxxx-xxxx-xxxx-1234</td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+          {% endifequal %}
+          {% ifequal setting "history" %}
+            <div class="col l9 s8">
+                <table class="stripped">
+                  <thead>
+                    <tr>
+                      <th><h5 class="header col s12 light">History</h5></th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Sample Trip</td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+          {% endifequal %}
+        {% else %}
+          <div class="col l9 s8">
+                <table class="stripped">
+                  <thead>
+                    <tr>
+                      <th><h5 class="header col s12 light">Preferences</h5></th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Email Login</td>
+                      <td>someone@gmail.com</td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+        {% endif %}
+          
+        </div>
+
+<!--     <div class="section no-pad-bot">
+      <div class="container">
+        <div class="row center">
+          <h5 class="header col s12 light">Find your next flight</h5>
+        <div class="input-field col l3 s12">
+          <i class="material-icons prefix">flight_takeoff</i>
+          <input type="text" id="autocomplete-input" class="autocomplete">
+          <label for="autocomplete-input">Source</label>
+        </div>
+        <div class="input-field col l3 s12">
+          <i class="material-icons prefix">flight_land</i>
+          <input type="text" id="autocomplete-input" class="autocomplete">
+          <label for="autocomplete-input">Destination</label>
+        </div>
+        <div class="input-field col l3 s6">
+          <i class="material-icons prefix">date_range</i>
+          <input type="text" class="datepicker">
+        </div>
+        <div class="input-field col l3 s6">
+          <i class="material-icons prefix">date_range</i>
+          <input type="text" class="datepicker">
+        </div>
+
+        </div>
+        <div class="row center">
+          <a class="btn waves-effect waves-light teal lighten-2" style="width: 300px"><i class="large material-icons">search</i></a>
+        </div>
+
+
+        <br><br>
+
+      </div>
+    </div> -->
+  </div>
+
+{% endblock content %}

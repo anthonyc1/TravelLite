@@ -1,0 +1,103 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>TravelLite</title>
+
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="{% static 'css/materialize.css' %}" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="{% static 'css/style.css' %}" type="text/css" rel="stylesheet" media="screen,projection"/>
+</head>
+<body>
+  <nav class="white" role="navigation">
+    <div class="nav-wrapper container">
+      <a id="logo-container" href="/" class="brand-logo teal-text">TravelLite</a>
+      <ul class="right hide-on-med-and-down">
+        <li><a href="/">Flights</a></li>
+        <li><a href="/hotels">Hotels</a></li>
+        <li><a href="/trains">Trains</a></li>
+        <li><a href="/explore">Explore</a></li>
+        <!-- Dropdown Trigger -->
+        <a class='dropdown-trigger btn' href='#' data-target='dropdown1'>My Account</a>
+
+        <!-- Dropdown Structure -->
+        <ul id='dropdown1' class='dropdown-content'>
+          <li><a href="/login">Log In</a></li>
+          <li><a href="/signup">Sign Up</a></li>
+        </ul>
+      </ul>
+      
+      <ul id="nav-mobile" class="sidenav">
+        <li><a href="/">TravelLite</a></li>
+        <li class="divider" tabindex="-1"></li>
+        <li><a href="/">Flights</a></li>
+        <li><a href="/hotels">Hotels</a></li>
+        <li><a href="/trains">Trains</a></li>
+        <li><a href="/explore">Explore</a></li>
+        <li class="divider" tabindex="-1"></li>
+        <li><a class="teal-text" href="/login">Log In</a></li>
+        <li><a href="/signup">Sign Up</a></li>
+      </ul>
+      <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+    </div>
+  </nav>
+
+  {% block content %}
+  {% endblock content %}
+
+  <footer class="page-footer teal">
+    <div class="container">
+      <div class="row">
+        <div class="col l8 s8">
+          <h5 class="white-text">Team Bio</h5>
+          <p class="grey-text text-lighten-4">We are a team of college students working hard to provide the best possible service to users.</p>
+        </div>
+        <div class="col l4 s4">
+          <h5 class="white-text">More</h5>
+          <ul>
+            <li><a class="white-text" href="#!">Our design</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-copyright">
+      <div class="container">
+      Made by <a class="brown-text text-lighten-3" href="http://materializecss.com">Materialize</a>
+      </div>
+    </div>
+  </footer>
+  </body>
+
+    <!--  Scripts-->
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="{% static 'js/materialize.js' %}"></script>
+  <script src="{% static 'js/init.js' %}"></script>
+  <script>
+    $('.dropdown-trigger').dropdown();
+
+    $('.datepicker').datepicker({
+      format: 'ddd mm/dd',
+       selectMonths: true, // Creates a dropdown to control month
+        selectYears: 15, // Creates a dropdown of 15 years to control year,
+        today: 'Today',
+        clear: 'Clear',
+        close: 'Ok',
+        closeOnSelect: true,
+        autoClose:true
+        });
+
+    $('input.autocomplete').autocomplete({
+      data: {
+        "New York, NY": null,
+        "Detroit, MI": null,
+        "San Francisco, CA": null,
+        "Boston, MA": null,
+        "Philadelphia, PA": null,
+        "Seattle, WA": 'https://placehold.it/250x250'
+      },
+    });
+  </script>
+</html>
