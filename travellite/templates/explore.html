@@ -6,25 +6,47 @@
   <div id="index-banner">
     <div class="section no-pad-bot">
       <div class="container">
+        <form action="" method="POST">
+          {% csrf_token %}
         <h2 class="header center teal-text text-lighten-2">Explore new places</h2>
         <div class="row center">
           <h5 class="header col s12 light">Where will you go next?</h5>
           <div class="input-field col l11 s11">
             <i class="material-icons prefix">location_on</i>
-            <input type="text" id="autocomplete-input" class="autocomplete">
+            <input type="text" name="location" id="autocomplete-input" class="autocomplete">
             <label for="autocomplete-input">Next Destination</label>
           </div>
           <div class="input-field col l1 s1">
-            <a class="btn waves-effect waves-light teal lighten-2"><i class="large material-icons">search</i></a>
+            <button class="btn waves-effect waves-light" type="submit">
+              <i class="large material-icons">search</i>
+            </button>
           </div>
         </div>
-
+        </form>
         </div>
         <br><br>
 
       </div>
     </div>
-
+  
+  {% if results %}
+    <div class="row center">
+      <div class="col s12 m12">
+        {% for o in some_list %}
+          <div class="card teal lighten-2">
+            <div class="card-content white-text">
+              <span class="card-title">Card Title</span>
+              <p>I am a very simple card. I am good at containing small bits of information.
+              I am convenient because I require little markup to use effectively.</p>
+            </div>
+            <div class="card-action">
+              <a href="#">Book Now</a>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div> 
+  {% else %}
   <div class="parallax-container valign-wrapper">
     <div class="section no-pad-bot">
       <div class="container">
@@ -70,5 +92,6 @@
 
     </div>
   </div>
+  {% endif %}
 
 {% endblock content %}

@@ -1,8 +1,9 @@
 import os
 import json
 
-json_data = open('databaseProj/config_vars.json').read()
-secret = json.dumps(json_data)
+json_file = open('databaseProj/config_vars.json').read()
+data = json.loads(json_file)
+secret = data['SECRET_KEY']
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -70,6 +71,15 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'OPTIONS': {
+#             'read_default_file': os.path.join(BASE_DIR, 'mysql.cnf'),
+#         }
+#     }
+# }
 
 
 # Password validation

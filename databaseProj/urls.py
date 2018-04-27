@@ -26,5 +26,6 @@ urlpatterns = [
     path('trains/', views.trains, name='trains'),
     path('hotels/', views.hotels, name='hotels'),
     path('explore/', views.explore, name='explore'),
-    path('account/', views.account, name='account')
+    path('account/', views.account, name='account'),
+    path('logout/', views.index, name='logout')
 ]

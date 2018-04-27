@@ -6,39 +6,61 @@
   <div id="index-banner">
     <div class="section no-pad-bot">
       <div class="container">
+        <form action="" method="POST">
+          {% csrf_token %}
         <div class="row center">
           <h5 class="header col s12 light">Find your next flight</h5>
         <div class="input-field col l3 s12">
           <i class="material-icons prefix">flight_takeoff</i>
-          <input type="text" id="autocomplete-input" class="autocomplete">
+          <input type="text" name="source" id="autocomplete-input" class="autocomplete">
           <label for="autocomplete-input">Source</label>
         </div>
         <div class="input-field col l3 s12">
           <i class="material-icons prefix">flight_land</i>
-          <input type="text" id="autocomplete-input" class="autocomplete">
+          <input type="text" name="destination" id="autocomplete-input" class="autocomplete">
           <label for="autocomplete-input">Destination</label>
         </div>
         <div class="input-field col l3 s6">
           <i class="material-icons prefix">date_range</i>
-          <input type="text" class="datepicker">
+          <input type="text" name="startdate" class="datepicker">
         </div>
         <div class="input-field col l3 s6">
           <i class="material-icons prefix">date_range</i>
-          <input type="text" class="datepicker">
+          <input type="text" name="enddate" class="datepicker">
         </div>
 
         </div>
         <div class="row center">
-          <a class="btn waves-effect waves-light teal lighten-2" style="width: 300px"><i class="large material-icons">search</i></a>
+          <button class="btn waves-effect waves-light" style="width: 300px" type="submit">
+              <i class="large material-icons">search</i>
+            </button>
         </div>
-
+        </form>
 
         <br><br>
 
       </div>
     </div>
   </div>
-
+  
+  {% if results %}
+    <div class="row center">
+      <div class="col s12 m12">
+        {% for o in some_list %}
+          <div class="card teal lighten-2">
+            <div class="card-content white-text">
+              <span class="card-title">Card Title</span>
+              <p>I am a very simple card. I am good at containing small bits of information.
+              I am convenient because I require little markup to use effectively.</p>
+            </div>
+            <div class="card-action">
+              <a href="#">Book Now</a>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>    
+  {% else %}
   <div class="parallax-container valign-wrapper">
     <div class="section no-pad-bot">
       <div class="container">
@@ -49,7 +71,7 @@
     </div>
     <div class="parallax"><img src="{% static 'images/background1.jpg' %}" alt="Unsplashed background img 2"></div>
   </div>
-
+  
   <div class="container">
     <div class="section">
 
@@ -84,5 +106,6 @@
 
     </div>
   </div>
+  {% endif %}
 
 {% endblock content %}
