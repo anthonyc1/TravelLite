@@ -8,6 +8,9 @@
         {% csrf_token %}
         <center>
           <h4>Log In</h4>
+        {% if msg %}
+          {{ msg }}
+        {% endif %}
         </center>
         <div class="row">
           <div class="input-field col s12">

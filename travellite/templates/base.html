@@ -23,7 +23,7 @@
         <!-- Dropdown Trigger -->
 
         <a class='dropdown-trigger btn' href='#' data-target='dropdown1'>My Account</a>
-        {% if session %}        
+        {% if request.session.current_user %}        
         <ul id='dropdown1' class='dropdown-content'>
           <li><a href="/account">Settings</a></li>
           <li><a href="/logout">Log Out</a></li>
@@ -45,7 +45,7 @@
         <li><a href="/trains">Trains</a></li>
         <li><a href="/explore">Explore</a></li>
         <li class="divider" tabindex="-1"></li>
-        {% if session %}        
+        {% if request.session.current_user %}        
         <li><a href="/account">Settings</a></li>
         <li><a href="/logout">Log Out</a></li>
         {% else %}

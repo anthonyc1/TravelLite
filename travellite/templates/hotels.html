@@ -50,7 +50,7 @@
               <p>{{obj.dailyCost}}</p>
             </div>
             <div class="card-action">
-              <a href="#">Book Now</a>
+              <a href="{% url 'book' %}?type=hotel&id={{obj.id}}">Book Now</a>
             </div>
           </div>
         {% endfor %}

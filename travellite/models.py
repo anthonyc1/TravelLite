@@ -17,6 +17,8 @@ class History(models.Model):
 	bookingStartDate = models.DateField()
 	paymentAmount = models.DecimalField(max_digits=6,decimal_places=2)
 	paymentCardNo = models.CharField(max_length=16)
+	companyName = models.CharField(max_length=30, default='company')
+	location = models.CharField(max_length=30, default='location')
 
 class Flight(models.Model):
 	companyName = models.CharField(max_length=30)

@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+#from django.contrib.auth import views as auth_views
 
 from travellite import views
 
@@ -22,10 +23,12 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name='index'),
     path('login/', views.login, name='login'),
+    #path('login/', auth_views.login, {'template_name': 'login.html'}),
     path('signup/', views.signup, name='signup'),
     path('trains/', views.trains, name='trains'),
     path('hotels/', views.hotels, name='hotels'),
     path('explore/', views.explore, name='explore'),
+    path('book/', views.book, name='book'),
     path('account/', views.account, name='account'),
-    path('logout/', views.index, name='logout')
+    path('logout/', views.logout, name='logout')
 ]

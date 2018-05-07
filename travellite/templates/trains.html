@@ -48,29 +48,25 @@
   </div>
 
   {% if results %}
-    <div class="row center">
+        <div class="row center">
       <div class="container">
         {% for obj in some_list %}
           <div class="card teal lighten-2">
             <div class="card-content white-text">
               <span class="card-title">{{obj.companyName}}</span>
-              <div class="row">
-                <div class="col l6 m6 s6">
+              <div class="row" style="font-size: 16px;">
+                <div class="col l4 m4 s4">
                   <p>Source: {{obj.sourceLocation}}</p>
                   <p>Destination: {{obj.destinationLocation}}</p>
                 </div>
-              <div class="col l6 m6 s6">
+              <div class="col l4 m4 s4">
               <p>Departure Date: {{obj.departureDate}}</p>
               <p>Departure Time: {{obj.departureTime}}</p>
               </div>
               {% if class == "economy" %}
               <div class="col l4 m4 s4">
                 <p>Class: economy</p>
-              </div>
-              <div class="col l4 m4 s4">
               <p>Fare: {{obj.fareEconomy}}</p>
-              </div>
-              <div class="col l4 m4 s4">
               <p>Seats Available: {{obj.numSeatsRemainingEconomy}}</p>
               </div>
               {% endif %}
@@ -99,12 +95,12 @@
             </div>
             </div>
             <div class="card-action">
-              <a href="#">Book Now</a>
+              <a href="{% url 'book' %}?type=train&class={{class}}&id={{obj.id}}">Book Now</a>
             </div>
           </div>
         {% endfor %}
       </div>
-    </div>    
+    </div> 
   {% else %}
   <div class="parallax-container valign-wrapper">
     <div class="section no-pad-bot">

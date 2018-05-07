@@ -25,7 +25,7 @@
                   <tbody>
                     <tr>
                       <td>Email Login</td>
-                      <td>someone@gmail.com</td>
+                      <td>{{request.session.current_user}}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -61,11 +61,26 @@
                       <th><h5 class="header col s12 light">History</h5></th>
                       <th></th>
                     </tr>
+                    <tr>
+                      <th>Type</th>
+                      <th>Company</th>
+                      <th>Destination</th>
+                      <th>Book Date</th>
+                      <th>Total</th>
+                      <th>Card Number</th>
+                    </tr>
                   </thead>
                   <tbody>
+                    {% for obj in transactions %}
                     <tr>
-                      <td>Sample Trip</td>
+                      <td>{{obj.bookingType}}</td>
+                      <td>{{obj.companyName}}</td>
+                      <td>{{obj.location}}</td>
+                      <td>{{obj.bookingStartDate}}</td>
+                      <td>${{obj.paymentAmount}}</td>
+                      <td>{{obj.paymentCardNo}}</td>
                     </tr>
+                    {% endfor %}
                   </tbody>
                 </table>
             </div>
