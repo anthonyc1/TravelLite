@@ -41,12 +41,13 @@
   {% if results %}
   <div class="row center">
       <div class="col s12 m12">
-        {% for o in some_list %}
+        {% for obj in some_list %}
           <div class="card teal lighten-2">
             <div class="card-content white-text">
-              <span class="card-title">Card Title</span>
-              <p>I am a very simple card. I am good at containing small bits of information.
-              I am convenient because I require little markup to use effectively.</p>
+              <span class="card-title">{{obj.companyName}}</span>
+              <p>{{obj.address}}</p>
+              <p>{{obj.startDate}}</p>
+              <p>{{obj.dailyCost}}</p>
             </div>
             <div class="card-action">
               <a href="#">Book Now</a>

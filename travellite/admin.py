@@ -8,4 +8,4 @@ class UserAdmin(admin.ModelAdmin):
 
 @admin.register(Location)
 class LocationAdmin(admin.ModelAdmin):
-	list_display = ['city', 'region', 'country']
+	list_display = ['city', 'region']

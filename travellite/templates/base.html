@@ -89,9 +89,9 @@
   <script src="{% static 'js/init.js' %}"></script>
   <script>
     $('.dropdown-trigger').dropdown();
-
+      
     $('.datepicker').datepicker({
-      format: 'mm/dd/yyyy',
+      format: 'yyyy-mm-dd',
        selectMonths: true, // Creates a dropdown to control month
         selectYears: 15, // Creates a dropdown of 15 years to control year,
         today: 'Today',
@@ -103,7 +103,8 @@
 
     $('input.autocomplete').autocomplete({
       data: {
-        "New York, NY": null,
+        "New York City, NY": null,
+        "Los Angeles, CA": null,
         "Detroit, MI": null,
         "San Francisco, CA": null,
         "Boston, MA": null,

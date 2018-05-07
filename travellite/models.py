@@ -8,20 +8,21 @@ class User(models.Model):
 class Location(models.Model):
 	city = models.CharField(max_length=30)
 	region = models.CharField(max_length=2)
-	country = models.CharField(max_length=2)
 	image = models.CharField(max_length=200)
 
-	class Meta:
-		unique_together = ('city', 'region', 'country')
+class History(models.Model):
+	userEmail = models.CharField(max_length=36)
+	BOOKING_TYPES = [('flight', 'Flight'), ('train', 'Train'), ('hotel', 'Hotel')]
+	bookingType = models.CharField(choices=BOOKING_TYPES, max_length=6)
+	bookingStartDate = models.DateField()
+	paymentAmount = models.DecimalField(max_digits=6,decimal_places=2)
+	paymentCardNo = models.CharField(max_length=16)
 
-class Booking(models.Model):
-	startDate = models.DateField()
-
-class Transportation(models.Model):
-	id = models.ForeignKey(Booking, on_delete=models.CASCADE,primary_key=True)
-	sourceLocation = models.OneToOneField(Location, on_delete=models.DO_NOTHING, related_name='source')
-	destinationLocation = models.OneToOneField(Location, on_delete=models.DO_NOTHING, related_name='destination')
-	startDate = models.DateField()
+class Flight(models.Model):
+	companyName = models.CharField(max_length=30)
+	sourceLocation = models.CharField(max_length=30)
+	destinationLocation = models.CharField(max_length=30)
+	departureDate = models.DateField()
 	departureTime = models.TimeField()
 	fareEconomy = models.DecimalField(max_digits=6,decimal_places=2)
 	fareBusiness = models.DecimalField(max_digits=6,decimal_places=2)
@@ -30,29 +31,24 @@ class Transportation(models.Model):
 	numSeatsRemainingBusiness = models.IntegerField()
 	numSeatsRemainingFirst = models.IntegerField()
 
-
-	def clean(self):
-		if fare <= 0:
-			raise ValidationError('Fare must be greater than 0')
-
-class Flight(models.Model):
-	id = models.OneToOneField(Transportation, on_delete=models.DO_NOTHING, primary_key=True)
-	airline = models.CharField(max_length=30)
-
 class Train(models.Model):
-	id = models.OneToOneField(Transportation, on_delete=models.DO_NOTHING, primary_key=True)
-	railroad = models.CharField(max_length=30)
+	companyName = models.CharField(max_length=30)
+	sourceLocation = models.CharField(max_length=30)
+	destinationLocation = models.CharField(max_length=30)
+	departureDate = models.DateField()
+	departureTime = models.TimeField()
+	fareEconomy = models.DecimalField(max_digits=6,decimal_places=2)
+	fareBusiness = models.DecimalField(max_digits=6,decimal_places=2)
+	fareFirst = models.DecimalField(max_digits=6,decimal_places=2)
+	numSeatsRemainingEconomy = models.IntegerField()
+	numSeatsRemainingBusiness = models.IntegerField()
+	numSeatsRemainingFirst = models.IntegerField()
 
 class Hotel(models.Model):
-	id = models.OneToOneField(Booking, on_delete=models.DO_NOTHING, primary_key=True)
-	startDate = models.DateField()
 	dailyCost = models.DecimalField(max_digits=6,decimal_places=2)
 	address = models.CharField(max_length=30)
-	location = models.OneToOneField(Location, on_delete=models.DO_NOTHING)
-
-	def clean(self):
-		if dailyCost <= 0:
-			raise ValidationError('Daily cost must be greater than 0')
+	city = models.CharField(max_length=30)
+	companyName = models.CharField(max_length=30,default='hotel')
 
 class Payment(models.Model):
 	PAYMENT_TYPES = [('credit', 'Credit'), ('debit', 'Debit')]
@@ -60,13 +56,8 @@ class Payment(models.Model):
 	paymentType = models.CharField(choices=PAYMENT_TYPES, max_length=6)
 	cardNo = models.CharField(max_length=16)
 
-	def clean(self):
-		if amount <= 0:
-			raise ValidationError('Amount must be greater than 0')
-
 class Attraction(models.Model):
 	city = models.CharField(max_length=30, default='Stony Brook')
-	region = models.CharField(max_length=2, default='NY')
 	attractionName = models.CharField(max_length=30)
 	attractionDescription = models.CharField(max_length=1000)
 	image = models.CharField(max_length=200)
@@ -76,12 +67,12 @@ class Attraction(models.Model):
 
 # 	attractionName = models.CharField(max_length=30)
 # 	attractionDescription = models.CharField(max_length=1000)
-# 	image = models.CharField(max_length=200)
+# # 	image = models.CharField(max_length=200)
 
-	# class Meta:
-	# 	unique_together = ('city', 'region')
+# 	# class Meta:
+# 	# 	unique_together = ('city', 'region')
 
-class Purchase(models.Model):
-	userID = models.ForeignKey(Booking, on_delete=models.DO_NOTHING, primary_key=True)
-	bookingID = models.IntegerField()
-	paymentID = models.IntegerField()
+# class Purchase(models.Model):
+# 	userID = models.ForeignKey(Booking, on_delete=models.DO_NOTHING, primary_key=True)
+# 	bookingID = models.IntegerField()
+# 	paymentID = models.IntegerField()

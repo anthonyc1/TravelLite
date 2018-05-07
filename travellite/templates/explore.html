@@ -30,10 +30,11 @@
     </div>
   
   {% if results %}
+  <div class="container">
   <center><h5 class="header col s12 light">{{ location.0.city }}</h5></center>
     <div class="row center">
-      <div class="col l4 m12 s12">
         {% for obj in some_list %}
+        <div class="col l4 m4 s12">
           <div class="card teal lighten-2">
             <div><img src="{% static 'images/' %}{{obj.image}}" 
              width="80%" alt="Card one"></div>
@@ -42,13 +43,14 @@
               <p>{{obj.attractionDescription}}</p>
             </div>
 
-            <div class="card-action">
+<!--             <div class="card-action">
               <a href="#">Book Now</a>
-            </div>
+            </div> -->
+          </div>
           </div>
         {% endfor %}
-      </div>
     </div> 
+  </div>
   {% else %}
   <div class="parallax-container valign-wrapper">
     <div class="section no-pad-bot">

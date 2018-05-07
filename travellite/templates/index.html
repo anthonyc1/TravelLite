@@ -10,19 +10,28 @@
           {% csrf_token %}
         <div class="row center">
           <h5 class="header col s12 light">Find your next flight</h5>
-        <div class="input-field col l4 s12">
+        <div class="input-field col l6 s12">
           <i class="material-icons prefix">flight_takeoff</i>
           <input type="text" name="source" id="autocomplete-input" class="autocomplete">
           <label for="autocomplete-input">Source</label>
         </div>
-        <div class="input-field col l4 s12">
+        <div class="input-field col l6 s12">
           <i class="material-icons prefix">flight_land</i>
           <input type="text" name="destination" id="autocomplete-input" class="autocomplete">
           <label for="autocomplete-input">Destination</label>
         </div>
-        <div class="input-field col l4 s12">
+        <div class="input-field col l8 s12">
           <i class="material-icons prefix">date_range</i>
           <input type="text" name="startdate" class="datepicker">
+        </div>
+        <div class="input-field col l4 s12">
+          <label></label>
+          <select name= "class" class="browser-default">
+            <option value="" disabled selected>Choose a class</option>
+            <option value="economy">Economy</option>
+            <option value="business">Business</option>
+            <option value="first">First</option>
+          </select>
         </div>
 
         </div>
@@ -41,13 +50,54 @@
   
   {% if results %}
     <div class="row center">
-      <div class="col s12 m12">
-        {% for o in some_list %}
+      <div class="container">
+        {% for obj in some_list %}
           <div class="card teal lighten-2">
             <div class="card-content white-text">
-              <span class="card-title">Card Title</span>
-              <p>I am a very simple card. I am good at containing small bits of information.
-              I am convenient because I require little markup to use effectively.</p>
+              <span class="card-title">{{obj.companyName}}</span>
+              <div class="row">
+                <div class="col l6 m6 s6">
+                  <p>Source: {{obj.sourceLocation}}</p>
+                  <p>Destination: {{obj.destinationLocation}}</p>
+                </div>
+              <div class="col l6 m6 s6">
+              <p>Departure Date: {{obj.departureDate}}</p>
+              <p>Departure Time: {{obj.departureTime}}</p>
+              </div>
+              {% if class == "economy" %}
+              <div class="col l4 m4 s4">
+                <p>Class: economy</p>
+              </div>
+              <div class="col l4 m4 s4">
+              <p>Fare: {{obj.fareEconomy}}</p>
+              </div>
+              <div class="col l4 m4 s4">
+              <p>Seats Available: {{obj.numSeatsRemainingEconomy}}</p>
+              </div>
+              {% endif %}
+              {% if class == "business" %}
+              <div class="col l4 m4 s4">
+                <p>Class: business</p>
+              </div>
+              <div class="col l4 m4 s4">
+              <p>Fare: {{obj.fareBusiness}}</p>
+            </div>
+              <div class="col l4 m4 s4">
+              <p>Seats Available: {{obj.numSeatsRemainingBusiness}}</p>
+            </div>
+              {% endif %}
+              {% if class == "first" %}
+              <div class="col l4 m4 s4">
+                <p>Class: first</p>
+              </div>
+              <div class="col l4 m4 s4">
+              <p>Fare: {{obj.fareFirst}}</p>
+            </div>
+              <div class="col l4 m4 s4">
+              <p>Seats Available: {{obj.numSeatsRemainingFirst}}</p>
+            </div>
+              {% endif %}
+            </div>
             </div>
             <div class="card-action">
               <a href="#">Book Now</a>
