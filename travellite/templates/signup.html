@@ -4,29 +4,30 @@
 {% block content %}
 <div class="container">
   <div class="row">
-      <form class="col s6 offset-s3">
+      <form class="col s6 offset-s3" action="" method="POST">
+        {% csrf_token %}
         <center>
           <h4>Sign Up</h4>
         </center>
         <div class="row">
           <div class="input-field col s12">
             <i class="material-icons prefix">account_circle</i>
-            <input id="icon_prefix" type="text">
+            <input id="icon_prefix" name="username" type="text">
             <label for="icon_prefix">Name</label>
           </div>
           <div class="input-field col s12">
             <i class="material-icons prefix">email</i>
-            <input id="icon_prefix email" type="email" class="validate">
+            <input id="icon_prefix email" name="email" type="email" class="validate">
             <label for="icon_prefix">Email</label>
             <span class="helper-text" data-error="Incorrect email format" data-success=""></span>
           </div>
           <div class="input-field col s12">
             <i class="material-icons prefix">lock</i>
-            <input id="icon_prefix" type="password">
+            <input id="icon_prefix" name="password" type="password">
             <label for="icon_prefix">Password</label>
           </div>
           <center>
-            <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+            <button class="btn waves-effect waves-light" type="submit">Submit
               <i class="material-icons right">send</i>
             </button>
           </center>

@@ -4,6 +4,7 @@ import json
 json_file = open('databaseProj/config_vars.json').read()
 data = json.loads(json_file)
 secret = data['SECRET_KEY']
+sql_password = data['sql_password']
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -65,21 +66,23 @@ WSGI_APPLICATION = 'databaseProj.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
-
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'OPTIONS': {
-#             'read_default_file': os.path.join(BASE_DIR, 'mysql.cnf'),
-#         }
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
 #     }
 # }
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME' : 'travellite',
+        'USER' : 'root',
+        'PASSWORD' : sql_password,
+        'HOST' : 'localhost',
+        'PORT' : ''
+    }
+}
 
 
 # Password validation

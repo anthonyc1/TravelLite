@@ -30,15 +30,18 @@
     </div>
   
   {% if results %}
+  <center><h5 class="header col s12 light">{{ location.0.city }}</h5></center>
     <div class="row center">
-      <div class="col s12 m12">
-        {% for o in some_list %}
+      <div class="col l4 m12 s12">
+        {% for obj in some_list %}
           <div class="card teal lighten-2">
+            <div><img src="{% static 'images/' %}{{obj.image}}" 
+             width="80%" alt="Card one"></div>
             <div class="card-content white-text">
-              <span class="card-title">Card Title</span>
-              <p>I am a very simple card. I am good at containing small bits of information.
-              I am convenient because I require little markup to use effectively.</p>
+              <span class="card-title">{{obj.attractionName}}</span>
+              <p>{{obj.attractionDescription}}</p>
             </div>
+
             <div class="card-action">
               <a href="#">Book Now</a>
             </div>
