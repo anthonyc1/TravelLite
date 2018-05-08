@@ -1,7 +1,7 @@
 # Travellite
-A travel agency Django app using [Materialize CSS framework](http://materializecss.com/).
+A travel agency Django app using [Materialize CSS framework](http://materializecss.com/).  
 
-We used MySQL as the database.
+The database was MySQL.
 
 ## Screenshots of the Django application
 
