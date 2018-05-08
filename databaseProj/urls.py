@@ -30,5 +30,6 @@ urlpatterns = [
     path('explore/', views.explore, name='explore'),
     path('book/', views.book, name='book'),
     path('account/', views.account, name='account'),
+    path('reviews/', views.reviews, name='reviews'),
     path('logout/', views.logout, name='logout')
 ]

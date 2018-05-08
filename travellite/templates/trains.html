@@ -94,9 +94,11 @@
               {% endif %}
             </div>
             </div>
+            {% if request.session.current_user %} 
             <div class="card-action">
               <a href="{% url 'book' %}?type=train&class={{class}}&id={{obj.id}}">Book Now</a>
             </div>
+            {% endif %}
           </div>
         {% endfor %}
       </div>

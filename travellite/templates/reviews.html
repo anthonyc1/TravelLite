@@ -9,27 +9,37 @@
         <form action="" method="POST">
         {% csrf_token %}
         <div class="row center">
-          <h5 class="header col s12 light">Find your travel accommodations</h5>
-        <div class="input-field col l6 s12">
-          <i class="material-icons prefix">hotel</i>
-          <input type="text" name="location" id="autocomplete-input" class="autocomplete">
-          <label for="autocomplete-input">Location</label>
+          <h5 class="header col s12 light">Review our service</h5>
+        <div class="input-field col l9 s12">
+          <i class="material-icons prefix">rate_review</i>
+          <textarea id="textarea1" name="review" class="materialize-textarea"></textarea>
+          <label for="textarea1">Review</label>
         </div>
-        <div class="input-field col l3 s6">
-          <i class="material-icons prefix">date_range</i>
-          <input type="text" name="startdate" class="datepicker">
+        <div class="input-field col l3 s12">
+          <label></label>
+          <select name= "rating" class="browser-default">
+            <option value="" disabled selected>Rating</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
         </div>
-        <div class="input-field col l3 s6">
-          <i class="material-icons prefix">date_range</i>
-          <input type="text" name="enddate" class="datepicker">
         </div>
-
-        </div>
+        {% if request.session.current_user %}
         <div class="row center">
           <button class="btn waves-effect waves-light" style="width: 300px" type="submit">
-              <i class="large material-icons">search</i>
-            </button>
+              Submit
+          </button>
         </div>
+        {% else %}
+        <div class="row center">
+          <button disabled class="btn waves-effect waves-light" style="width: 300px" type="submit">
+              Submit
+          </button>
+        </div>
+        {% endif %}
         </form>
 
         <br><br>
@@ -44,16 +54,10 @@
         {% for obj in some_list %}
           <div class="card teal lighten-2">
             <div class="card-content white-text">
-              <span class="card-title">{{obj.companyName}}</span>
-              <p>{{obj.address}}</p>
-              <p>{{obj.startDate}}</p>
-              <p>{{obj.dailyCost}}</p>
+              <span class="card-title">{{obj.author}} says...</span>
+              <p>Ratings: {{obj.rating}} | {{obj.submissionDate}}</p>
+              <p>{{obj.review}}</p>
             </div>
-            {% if request.session.current_user %} 
-            <div class="card-action">
-              <a href="{% url 'book' %}?type=hotel&id={{obj.id}}">Book Now</a>
-            </div>
-            {% endif %}
           </div>
         {% endfor %}
       </div>

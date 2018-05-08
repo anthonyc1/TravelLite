@@ -7,7 +7,7 @@ import jwt
 import json
 import datetime
 
-from .models import User, Location, History, Flight, Train, Hotel, Payment, Attraction
+from .models import User, Location, History, Flight, Train, Hotel, Payment, Attraction, Review
 
 json_file = open('databaseProj/config_vars.json').read()
 data = json.loads(json_file)
@@ -42,7 +42,9 @@ def login(request):
 		valid_user = (len(list(check_user)) == 1)
 		if (valid_user):
 			current_user = email
+			user_name = check_user.first().username
 			request.session['current_user'] = current_user
+			request.session['user_name'] = user_name
 			#encoded = jwt.encode(payload, secret, algorithm='HS256')
 			return render(request, 'login.html', {'msg': 'Login successful'})
 		else:
@@ -68,6 +70,22 @@ def signup(request):
 			return render(request, 'signup.html', {'msg': 'Error. Email already exists'})
 	else:
 		return render(request, 'signup.html')
+
+@csrf_exempt
+def reviews(request):
+	if request.method == 'POST':
+		review = request.POST['review']
+		rating = request.POST['rating']
+		author = request.session['user_name']
+		current_date = datetime.datetime.today().strftime('%Y-%m-%d')
+		user_exists = Review.objects.filter(author = author)
+		if (len(list(user_exists)) == 0):
+			new_review = Review.objects.create(review=review, rating=rating, submissionDate= current_date,author= author)
+		reviews = Review.objects.all()
+		return render(request, 'reviews.html', {'results': 'yes', 'some_list': reviews})
+	else:
+		reviews = Review.objects.all()
+		return render(request, 'reviews.html', {'results': 'yes', 'some_list': reviews})
 
 @csrf_exempt
 def hotels(request):
@@ -110,18 +128,15 @@ def trains(request):
 @csrf_exempt
 def explore(request):
 	if request.method == 'POST':
-		if request.submit == 'book':
-			return render(request, 'book.html')
-		else:
-			secret = data['secret']
-			location = request.POST['location']
-			locationArr = location.split(',')
-			city = locationArr[0];
-			region = locationArr[1];
-			location = Location.objects.filter(city = city)
-			attraction = Attraction.objects.filter(city = city)
-			location = list(location)
-			return render(request, 'explore.html',{"results":"yes", "location": location, "some_list":attraction})
+		secret = data['secret']
+		location = request.POST['location']
+		locationArr = location.split(',')
+		city = locationArr[0];
+		region = locationArr[1];
+		location = Location.objects.filter(city = city)
+		attraction = Attraction.objects.filter(city = city)
+		location = list(location)
+		return render(request, 'explore.html',{"results":"yes", "location": location, "some_list":attraction})
 	else:
 		return render(request, 'explore.html')
 
@@ -147,7 +162,7 @@ def book(request):
 				new_transaction.save()
 		elif (bookType == 'train'):
 			travelClass = request.GET.get('class')
-			obj = Train.objects.filter(id = objId)
+			obj = Train.objects.filter(id = objId).first()
 			if (travelClass == 'economy'):
 				new_transaction = History.objects.create(userEmail=current_user, bookingType=bookType, bookingStartDate= current_date,paymentAmount=obj.fareEconomy, paymentCardNo=card_number, companyName=obj.companyName, location=obj.destinationLocation)
 				new_transaction.save()
@@ -158,7 +173,7 @@ def book(request):
 				new_transaction = History.objects.create(userEmail=current_user, bookingType=bookType, bookingStartDate= current_date,paymentAmount=obj.fareFirst, paymentCardNo=card_number, companyName=obj.companyName, location=obj.destinationLocation)
 				new_transaction.save()
 		elif (bookType == 'hotel'):
-			obj = Hotel.objects.filter(id = objId)
+			obj = Hotel.objects.filter(id = objId).first()
 			new_transaction = History.objects.create(userEmail=current_user, bookingType=bookType, bookingStartDate= current_date,paymentAmount=obj.dailyCost, paymentCardNo=card_number, companyName=obj.companyName, location=obj.address)
 			new_transaction.save()
 		return render(request, 'book.html', {'msg': 'Booking successful'})
@@ -191,4 +206,5 @@ def account(request):
 def logout(request):
 	#clear session
 	del request.session['current_user']
+	del request.session['user_name']
 	return render(request, 'login.html', {'msg': 'Logout successful'})

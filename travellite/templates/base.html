@@ -20,6 +20,7 @@
         <li><a href="/hotels">Hotels</a></li>
         <li><a href="/trains">Trains</a></li>
         <li><a href="/explore">Explore</a></li>
+        <li><a href="/reviews">Review</a></li>
         <!-- Dropdown Trigger -->
 
         <a class='dropdown-trigger btn' href='#' data-target='dropdown1'>My Account</a>
@@ -44,6 +45,7 @@
         <li><a href="/hotels">Hotels</a></li>
         <li><a href="/trains">Trains</a></li>
         <li><a href="/explore">Explore</a></li>
+        <li><a href="/reviews">Review</a></li>
         <li class="divider" tabindex="-1"></li>
         {% if request.session.current_user %}        
         <li><a href="/account">Settings</a></li>
@@ -89,6 +91,8 @@
   <script src="{% static 'js/init.js' %}"></script>
   <script>
     $('.dropdown-trigger').dropdown();
+
+    M.textareaAutoResize($('#textarea1'));
       
     $('.datepicker').datepicker({
       format: 'yyyy-mm-dd',

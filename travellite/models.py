@@ -10,6 +10,12 @@ class Location(models.Model):
 	region = models.CharField(max_length=2)
 	image = models.CharField(max_length=200)
 
+class Review(models.Model):
+	review = models.CharField(max_length=1000)
+	rating = models.IntegerField()
+	author = models.CharField(max_length=30)
+	submissionDate = models.DateField()
+
 class History(models.Model):
 	userEmail = models.CharField(max_length=36)
 	BOOKING_TYPES = [('flight', 'Flight'), ('train', 'Train'), ('hotel', 'Hotel')]
