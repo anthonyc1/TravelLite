@@ -23,11 +23,24 @@ def index(request):
 		destinationArr = destination.split(',')
 		destinationCity = destinationArr[0];
 		startdate = request.POST['startdate']
+		startdate = startdate.split('-')
+		year = int(startdate[0])
+		month = int(startdate[1])
+		day = int(startdate[2])
 		flightClass = request.POST['class']
-		flights = Flight.objects.filter(sourceLocation = sourceCity).filter(destinationLocation=destinationCity)
-		flights = list(flights)
 		print(request.POST)
-		return render(request, 'index.html',{"results":"yes", "some_list": flights, "class":flightClass})
+		if (flightClass == 'economy'):
+			flights = Flight.objects.filter(sourceLocation = sourceCity).filter(destinationLocation=destinationCity).filter(departureDate=datetime.date(year,month,day)).filter(numSeatsRemainingEconomy__gt=0)
+			flights = list(flights)
+			return render(request, 'index.html',{"results":"yes", "some_list": flights, "class":flightClass})
+		elif (flightClass == 'business'):	
+			flights = Flight.objects.filter(sourceLocation = sourceCity).filter(destinationLocation=destinationCity).filter(departureDate=datetime.date(year,month,day)).filter(numSeatsRemainingBusiness__gt=0)
+			flights = list(flights)
+			return render(request, 'index.html',{"results":"yes", "some_list": flights, "class":flightClass})
+		else:
+			flights = Flight.objects.filter(sourceLocation = sourceCity).filter(destinationLocation=destinationCity).filter(departureDate=datetime.date(year,month,day)).filter(numSeatsRemainingFirst__gt=0)
+			flights = list(flights)
+			return render(request, 'index.html',{"results":"yes", "some_list": flights, "class":flightClass})
 	else:
 		return render(request, 'index.html')
 	## figure out how booking will work (send to booking page?)
@@ -117,11 +130,26 @@ def trains(request):
 		destinationArr = destination.split(',')
 		destinationCity = destinationArr[0];
 		startdate = request.POST['startdate']
+		startdate = startdate.split('-')
+		year = int(startdate[0])
+		month = int(startdate[1])
+		day = int(startdate[2])
 		trainClass = request.POST['class']
-		trains = Train.objects.filter(sourceLocation = sourceCity).filter(destinationLocation=destinationCity)
-		trains = list(trains)
 		print(request.POST)
-		return render(request, 'trains.html',{"results":"yes", "some_list": trains, "class":trainClass})
+		trains = Train.objects.filter(sourceLocation = sourceCity).filter(destinationLocation=destinationCity).filter(departureDate=datetime.date(year,month,day))
+		trains = list(trains)
+		if (trainClass == 'economy'):
+			trains = Train.objects.filter(sourceLocation = sourceCity).filter(destinationLocation=destinationCity).filter(departureDate=datetime.date(year,month,day)).filter(numSeatsRemainingEconomy__gt=0)
+			trains = list(trains)
+			return render(request, 'trains.html',{"results":"yes", "some_list": trains, "class":trainClass})
+		elif (trainClass == 'business'):	
+			trains = Train.objects.filter(sourceLocation = sourceCity).filter(destinationLocation=destinationCity).filter(departureDate=datetime.date(year,month,day)).filter(numSeatsRemainingBusiness__gt=0)
+			trains = list(trains)
+			return render(request, 'trains.html',{"results":"yes", "some_list": trains, "class":trainClass})
+		else:
+			trains = Train.objects.filter(sourceLocation = sourceCity).filter(destinationLocation=destinationCity).filter(departureDate=datetime.date(year,month,day)).filter(numSeatsRemainingFirst__gt=0)
+			trains = list(trains)
+			return render(request, 'trains.html',{"results":"yes", "some_list": trains, "class":trainClass})
 	else:
 		return render(request, 'trains.html')
 
@@ -152,24 +180,30 @@ def book(request):
 			travelClass = request.GET.get('class')
 			obj = Flight.objects.filter(id = objId).first()
 			if (travelClass == 'economy'):
+				Flight.objects.filter(id = objId).update(numSeatsRemainingEconomy = obj.numSeatsRemainingEconomy-1)
 				new_transaction = History.objects.create(userEmail=current_user, bookingType=bookType, bookingStartDate= current_date,paymentAmount=obj.fareEconomy, paymentCardNo=card_number, companyName=obj.companyName, location=obj.destinationLocation)
 				new_transaction.save()
 			elif (travelClass == 'business'):
+				Flight.objects.filter(id = objId).update(numSeatsRemainingBusiness = obj.numSeatsRemainingBusiness-1)
 				new_transaction = History.objects.create(userEmail=current_user, bookingType=bookType, bookingStartDate= current_date,paymentAmount=obj.fareBusiness, paymentCardNo=card_number, companyName=obj.companyName, location=obj.destinationLocation)
 				new_transaction.save()
 			elif (travelClass == 'first'):
+				Flight.objects.filter(id = objId).update(numSeatsRemainingFirst = obj.numSeatsRemainingFirst-1)
 				new_transaction = History.objects.create(userEmail=current_user, bookingType=bookType, bookingStartDate= current_date,paymentAmount=obj.fareFirst, paymentCardNo=card_number, companyName=obj.companyName, location=obj.destinationLocation)
 				new_transaction.save()
 		elif (bookType == 'train'):
 			travelClass = request.GET.get('class')
 			obj = Train.objects.filter(id = objId).first()
 			if (travelClass == 'economy'):
+				Train.objects.filter(id = objId).update(numSeatsRemainingEconomy = obj.numSeatsRemainingEconomy-1)
 				new_transaction = History.objects.create(userEmail=current_user, bookingType=bookType, bookingStartDate= current_date,paymentAmount=obj.fareEconomy, paymentCardNo=card_number, companyName=obj.companyName, location=obj.destinationLocation)
 				new_transaction.save()
 			elif (travelClass == 'business'):
+				Train.objects.filter(id = objId).update(numSeatsRemainingBusiness = obj.numSeatsRemainingBusiness-1)
 				new_transaction = History.objects.create(userEmail=current_user, bookingType=bookType, bookingStartDate= current_date,paymentAmount=obj.fareBusiness, paymentCardNo=card_number, companyName=obj.companyName, location=obj.destinationLocation)
 				new_transaction.save()
 			elif (travelClass == 'first'):
+				Train.objects.filter(id = objId).update(numSeatsRemainingFirst = obj.numSeatsRemainingFirst-1)
 				new_transaction = History.objects.create(userEmail=current_user, bookingType=bookType, bookingStartDate= current_date,paymentAmount=obj.fareFirst, paymentCardNo=card_number, companyName=obj.companyName, location=obj.destinationLocation)
 				new_transaction.save()
 		elif (bookType == 'hotel'):
