@@ -33,6 +33,8 @@
   <div class="container">
   <center><h5 class="header col s12 light">{{ location.0.city }}</h5></center>
     <div class="row center">
+      <div><img src="{% static 'images/' %}{{location.0.image}}" 
+             width="100%" alt="Card one"></div>
         {% for obj in some_list %}
         <div class="col l4 m4 s12">
           <div class="card teal lighten-2">
